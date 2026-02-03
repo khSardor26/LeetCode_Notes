@@ -9,19 +9,53 @@
 </head>
 
 <body class="stackedit">
-  <div class="stackedit__html"><h1 id="🧩-leetcode-12-—-integer-to-roman">🧩 LeetCode 12 — Integer to Roman</h1>
-<p>Today I solved an interesting problem on <strong>LeetCode</strong>:<br>
-<strong>Integer → Roman (Problem #12)</strong>.</p>
-<p>One very useful trick I discovered was iterating through a <code>HashMap</code> (or <code>LinkedHashMap</code>) using <code>entrySet()</code>.</p>
-<p>This approach lets you access <strong>both keys and values</strong> at the same time — which is perfect for greedy algorithms like Roman numeral conversion.</p>
+  <div class="stackedit__html"><h1 id="leetcode-49-—-group-anagrams">LeetCode 49 — Group Anagrams</h1>
+<p>Today I solved an interesting problem on <strong>LeetCode</strong> — <strong>Problem 49: Group Anagrams</strong>.</p>
+<p>The core idea of this problem is to <strong>group strings that are anagrams</strong> of each other and return them as a list of lists.</p>
+<p>I used an elegant approach where:</p>
+<ul>
+<li>The <strong>key</strong> is the <strong>sorted version of the string</strong></li>
+<li>The <strong>value</strong> is a <strong>list of all strings that match that key</strong></li>
+</ul>
+<p>This works because all anagrams become identical after sorting their characters.</p>
 <hr>
-<h2 id="🔁-iterating-through-a-map-using-entryset">🔁 Iterating Through a Map Using <code>entrySet()</code></h2>
-<pre class=" language-java"><code class="prism  language-java"><span class="token keyword">for</span> <span class="token punctuation">(</span>Map<span class="token punctuation">.</span>Entry<span class="token operator">&lt;</span>Integer<span class="token punctuation">,</span> String<span class="token operator">&gt;</span> entry <span class="token operator">:</span> myMap<span class="token punctuation">.</span><span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">int</span> key <span class="token operator">=</span> entry<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    String str <span class="token operator">=</span> entry<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h2 id="🔑-key-insight">🔑 Key Insight</h2>
+<p>If two words are anagrams, their sorted versions are the same.</p>
+<p>Example:<br>
+“eat” → “aet”<br>
+“tea” → “aet”<br>
+“tan” → “ant”</p>
+<p>So <code>"aet"</code> and <code>"ant"</code> can be used as keys in a map.</p>
+<hr>
+<p>Time &amp; Space Complexity</p>
+<ul>
+<li>
+<p><strong>Time Complexity:</strong> <code>O(n · k log k)</code><br>
+<code>n</code> = number of strings, <code>k</code> = average length of each string</p>
+</li>
+<li>
+<p><strong>Space Complexity:</strong> <code>O(n · k)</code></p>
+</li>
+</ul>
+<h2 id="💻-java-implementation">💻 Java Implementation</h2>
+<pre class=" language-java"><code class="prism  language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> List<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>String<span class="token operator">&gt;&gt;</span> <span class="token function">groupAnagrams</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> strs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> List<span class="token operator">&lt;</span>String<span class="token operator">&gt;&gt;</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Key: "</span> <span class="token operator">+</span> key <span class="token operator">+</span> <span class="token string">" Value: "</span> <span class="token operator">+</span> str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>String word <span class="token operator">:</span> strs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> chars <span class="token operator">=</span> word<span class="token punctuation">.</span><span class="token function">toCharArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Arrays<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>chars<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            String sortedWord <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>chars<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            map<span class="token punctuation">.</span><span class="token function">computeIfAbsent</span><span class="token punctuation">(</span>sortedWord<span class="token punctuation">,</span> k <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
+
+
+
 
 </code></pre>
 </div>
