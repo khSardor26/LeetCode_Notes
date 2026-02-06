@@ -26,6 +26,12 @@ Maintain a window `[left → right]`:
 
 ---
 
+## Time & Space Complexity
+- T O(N)
+- S O(1)
+
+
+
 ## Types 🪟
 
 ### 1️⃣ Fixed Size Window
