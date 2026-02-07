@@ -1,62 +1,39 @@
 
-# 🔁 Cyclic Array Transformation (Modulo Indexing)
+# 📦 Spring Boot Multipart File Upload (Sample)
 
-## 🧠 Problem Idea
-
-You are given an integer array `nums`.
-
-For **each index `i`**:
-- Move **forward** if `nums[i] > 0`
-- Move **backward** if `nums[i] < 0`
-- Wrap around the array **cyclically**
-- Set `result[i]` to the value found at the computed index
-
-This problem is all about **circular indexing** and handling **negative modulo correctly**.
+A minimal and clean **Java Spring Boot** project that demonstrates how to upload files using **multipart/form-data** ✅  
+Perfect as a reference repo for interviews, backend practice, or plugging into bigger projects.
 
 ---
 
-## 💡 Key Insight
+## ✨ Features
 
-> **Modulo (`%`) turns a linear array into a circle**
-
-But ⚠️ **Java’s `%` can return negative values**, so we must normalize indices.
-
----
-
-## ✅Algorithm
-
-For every index `i`:
-
-1. Start from `index = i`
-2. Shift by `nums[i]`
-3. Use modulo `% n` to stay in bounds
-4. If index becomes negative → fix it , by normalization -> index += n
-5. Assign `result[i] = nums[index]`
+- 📤 Upload single file via `multipart/form-data`
+- 📦 Upload with metadata (DTO + file)
+- ✅ Validations (size / empty file / content type)
+- 🧾 Clear API responses + error handling
+- 🧪 Ready for Postman / cURL testing
+- 🧱 Clean code structure (controller → service → storage)
 
 ---
 
-## 🧩 Implementation (Java)
+## 🧰 Tech Stack
 
-```java
-class Solution {
-    public int[] constructTransformedArray(int[] nums) {
-        int n = nums.length;
-        int[] result = new int[n];
+- ☕ Java [17/21]
+- 🌱 Spring Boot [version]
+- 🔧 Maven / Gradle
+- 📄 Lombok (optional)
+- 🧪 JUnit (optional)
 
-        for (int i = 0; i < n; i++) {
-            int index = i;
+---
 
-            if (nums[i] > 0) {
-                index = (index + nums[i]) % n;
-            } 
-            else if (nums[i] < 0) {
-                index = (index + nums[i]) % n;
-                if (index < 0) index += n; // normalize negative index
-            }
+## 🗂️ Project Structure
 
-            result[i] = nums[index];
-        }
-        return result;
-    }
-}
+```txt
+src/main/java/...
+├── controller/     # REST endpoints
+├── service/        # business logic
+├── storage/        # file saving logic (local/cloud)
+├── dto/            # request/response models
+└── exception/      # custom errors + handler
 
