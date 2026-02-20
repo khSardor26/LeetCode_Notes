@@ -162,6 +162,27 @@ Very common for:
 
 ----------
 
+# 7️⃣ Common Mistakes
 
+-   Using `if` instead of `while`
+    
+-   Updating answer at wrong time
+    
+-   Wrong window size formula → `right - left + 1`
+    
+-   Forgetting to remove element from state
+    
+
+----------
+
+# 8️⃣ Mental Model
+
+-   Expand right
+    
+-   Fix with left
+    
+-   Update answer
+    
+-   Repeat
 
 
